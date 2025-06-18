@@ -1,0 +1,16 @@
+[
+    { "driver": "Fadel", "team": "Shinano Racing Team", "points": 167 },
+    { "driver": "Dappa", "team": "RedBull Audi", "points": 154 },
+    { "driver": "Tada", "team": "Storm Racing Hyundai", "points": 153 },
+    { "driver": "Ivan X3", "team": "Daffa Racing", "points": 142 },
+    { "driver": "Kevin", "team": "RedBull Audi Sister Team", "points": 78 },
+    { "driver": "Pakapak", "team": "Shinano Racing Team", "points": 71 },
+    { "driver": "Farrel", "team": "RedBull Audi", "points": 64 },
+    { "driver": "Airo", "team": "Southranger Gulf", "points": 62 },
+    { "driver": "Fikri", "team": "RedBull Audi Sister Team", "points": 36 },
+    { "driver": "Fargi", "team": "Toyota GR ANA Infinite", "points": 21 },
+    { "driver": "Emir", "team": "Storm Racing Hyundai", "points": 13 },
+    { "driver": "Jad", "team": "Daffa Racing", "points": 7 },
+    { "driver": "Ivan Akira", "team": "RedBull Audi", "points": 6 },
+    { "driver": "Diazz", "team": "Southranger Gulf", "points": 4 }
+  ]

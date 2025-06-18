@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entry List</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@600;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Saira', sans-serif;
+      margin: 0 auto;
+      padding: 20px;
+      max-width: 1400px;
+      background: #fff;
+      color: #111;
+    }
+
+    .entry-wrapper {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 30px;
+    }
+
+    .team-card {
+      background-color: #f5f5f5;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .team-rank {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .team-name {
+      font-weight: 800;
+      font-size: 20px;
+      color: #0b0b3b;
+    }
+
+    .drivers {
+      display: flex;
+      gap: 12px;
+      margin: 10px 0;
+      font-weight: 600;
+    }
+
+    .driver-tag {
+      background-color: #0b0b3b;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .team-image {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    .news-section {
+      margin-top: 60px;
+    }
+
+    .news-section h3 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .news-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .news-card {
+      width: 220px;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .news-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .news-card .content {
+      padding: 10px;
+    }
+
+    .more-news {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .more-news button {
+      background-color: #0b0b3b;
+      color: white;
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="top-bar">RX2 RX3</div>
+  <div class="nav-container">
+    <a href="index.html"><img src="project/gambar/ferrari83LOGO.jpg" alt="WEC Logo" class="logo" /></a>
+    <nav class="navbar">
+      <a href="news-statik.html">News</a>
+      <a href="calender-final.html">Calender</a>
+      <a href="entrylist.html">Entry List</a>
+      <a href="standings.html">Standings</a>
+    </nav>
+  </div>
+</header>
+
+<main class="entry-wrapper">
+  <div class="teams-grid">
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>1st</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">DAFFA RACING</div>
+      <div class="drivers">
+        <div class="driver-tag">#4 DAFFA</div>
+        <div class="driver-tag">#9 DIPAL</div>
+      </div>
+      <img src="project/gambar/ferrari50.png" alt="Daffa Racing" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>2nd</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">NEKOYO PERFORMANCE TEAM</div>
+      <div class="drivers">
+        <div class="driver-tag">#19 DASHIMO FLORENCE</div>
+        <div class="driver-tag">#81 ANTHOINE FASTA</div>
+      </div>
+      <img src="project/gambar/lambo63.png" alt="Nekoyo" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>3rd</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">IDGP TEAM STAYNIGHT WITH NDC</div>
+      <div class="drivers">
+        <div class="driver-tag">#96 RAFIF</div>
+        <div class="driver-tag">#10 CANDRA</div>
+      </div>
+      <img src="project/gambar/caddy38.png" alt="Nekoyo" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>4th</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">ZNP TRABAS TEAM</div>
+      <div class="drivers">
+        <div class="driver-tag">#22 FIXXED IT</div>
+        <div class="driver-tag">#07 WALKER AROUND</div>
+      </div>
+      <img src="project/gambar/peugeout93.png" alt="Nekoyo" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>5th</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">JAGONYA ENTOK VAZTER</div>
+      <div class="drivers">
+        <div class="driver-tag">#27 PIERRE LEGACHY</div>
+        <div class="driver-tag">#17 NAUFAL SATRIA</div>
+      </div>
+      <img src="project/gambar/porsche5.png" alt="Daffa Racing" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>6th</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">TEAM QUADRANT X JER</div>
+      <div class="drivers">
+        <div class="driver-tag">#15 ACE KUBO</div>
+        <div class="driver-tag">#86 ZOROS ROROS</div>
+      </div>
+      <img src="project/gambar/porsche99.png" alt="Nekoyo" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>7th</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">LS MOTORSPORT</div>
+      <div class="drivers">
+        <div class="driver-tag">#26 ZUYU</div>
+        <div class="driver-tag">#16 SHANDY</div>
+      </div>
+      <img src="project/gambar/alpine36.png" alt="Nekoyo" class="team-image">
+    </div>
+
+    <div class="team-card">
+      <div class="team-rank">
+        <span>8th</span>
+        <span>0 PTS</span>
+      </div>
+      <div class="team-name">VELOCE RACING TEAM</div>
+      <div class="drivers">
+        <div class="driver-tag">#13 SYARIF KHILMY</div>
+        <div class="driver-tag">#5 ANDRA NAUFAL</div>
+      </div>
+      <img src="project/gambar/bmw15.png" alt="Nekoyo" class="team-image">
+    </div>
+
+  </div>
+
+  <section class="news-section">
+    <h3>News</h3>
+    <div class="news-cards">
+      <div class="news-card">
+        <img src="project/gambar/peugeot spa.webp" alt="News 1">
+        <div class="content">
+          <strong>PEUGEOT</strong>
+          <p>Positif hasil di Spa setelah Duval dan Di Resta drive</p>
+        </div>
+      </div>
+      <div class="news-card">
+        <img src="project/gambar/Hawksworth.webp" alt="News 2">
+        <div class="content">
+          <strong>LEXUS</strong>
+          <p>Super-sub Hawksworth masuk Le Mans</p>
+        </div>
+      </div>
+      <div class="news-card">
+        <img src="project/gambar/vista spa.webp" alt="News 3">
+        <div class="content">
+          <strong>ALPINE</strong>
+          <p>Alpine comeback, harapan baru untuk WEC</p>
+        </div>
+      </div>
+    </div>
+    <div class="more-news">
+      <button>More News</button>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <h3>Our Partners</h3>
+  <div class="partners"></div>
+  <div class="footer-logo">
+    <img src="project/gambar/porsche6.png" alt="Footer Logo" />
+  </div>
+</footer>
+
+</body>
+</html>

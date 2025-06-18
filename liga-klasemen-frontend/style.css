@@ -1,0 +1,193 @@
+/* Global Layout */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Saira', sans-serif;
+  background-color: #fff;
+  color: #111;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Top Bar */
+.top-bar {
+  background-color: #00bfff;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  text-align: right;
+  border-radius: 8px;
+}
+
+/* Navigation */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.navbar a {
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+/* Hero News Section */
+.hero-news {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.main-news {
+  width: 65%;
+}
+
+.main-news h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.main-news-image {
+  max-width: 100%;
+  width: 1200px;
+  height: 440px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+/* Latest News Sidebar */
+.latest-news {
+  width: 30%;
+}
+
+.latest-news h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.latest-news ul {
+  list-style: none;
+  padding: 0;
+}
+
+.latest-news li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.latest-news img {
+  width: 110px;
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+/* Middle Banner */
+.middle-banner img {
+  width: 1320px;
+  height: 308px;
+  margin: 0 auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Schedule Section */
+.schedule {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  background-color: #0b0033;
+  color: white;
+  padding: 30px;
+  gap: 100px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.event {
+  font-size: 14px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  padding: 0 10px;
+}
+
+/* Standings Section */
+.standings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.standings table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.standings th, .standings td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.standings button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #00bfff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Social Media Section */
+.socials {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(to right, #1e004e, #6f00b5);
+  color: white;
+  border-radius: 8px;
+}
+
+.social-links a {
+  margin: 0 20px;
+  display: inline-block;
+  margin-top: 20px;
+  background-color: white;
+  color: #1e004e;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+/* Footer */
+.footer {
+  margin-top: 40px;
+  background-color: #0b0033;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 8px;
+}
+
+.footer-logo img {
+  margin-top: 20px;
+  height: 60px;
+}
+

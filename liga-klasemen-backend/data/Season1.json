@@ -1,0 +1,19 @@
+  [
+    { "driver": "Fadel", "team": "Shinano Pertamina Team", "points": 200 },
+    { "driver": "Airo", "team": "South Ranger Subaru", "points": 176 },
+    { "driver": "Ivan", "team": "Redbull Audi Sport", "points": 154 },
+    { "driver": "Dappa", "team": "Redbull Audi Sport", "points": 151 },
+    { "driver": "Fargi", "team": "Ampas Rally Team", "points": 134 },
+    { "driver": "Izmi", "team": "Just1 Racing", "points": 91 },
+    { "driver": "Ilham", "team": "Shinano Pertamina Team", "points": 69 },
+    { "driver": "Kevin", "team": "Audi Redbull Sister Car", "points": 58 },
+    { "driver": "Diazz", "team": "South Ranger Subaru", "points": 33 },
+    { "driver": "Fikri", "team": "Redbull Audi Sport", "points": 24 },
+    { "driver": "Ibal", "team": "Just1 Racing", "points": 23 },
+    { "driver": "Milea", "team": "Porsche Rowe", "points": 19 },
+    { "driver": "Eternalra", "team": "Shinano Pertamina Team", "points": 16 },
+    { "driver": "Dirga", "team": "South Ranger Subaru", "points": 13 },
+    { "driver": "Kapak", "team": "Shinano Pertamina Team", "points": 10 },
+    { "driver": "Athar", "team": "Porsche Rowe", "points": 6 },
+    { "driver": "Ataya", "team": "Ampas Rally Team", "points": 3 }
+  ]

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Klasemen Tim</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #001f3f;
+    }
+
+    header {
+      background-color: #1e2845;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .selector {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
+
+    select {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 18px;
+    }
+
+    thead {
+      background-color: #f0f0f0;
+      text-transform: uppercase;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+    }
+
+    td:last-child {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    @media (max-width: 600px) {
+      th, td {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span>FRLWRX STANDINGS</span>
+</header>
+
+<main>
+  <h1>Team Standings</h1>
+  
+  <div class="selector">
+    <label for="year-select-team">Season:</label>
+    <select id="year-select-team"></select>
+  </div>
+
+  <table id="teams-table">
+    <thead>
+      <tr>
+        <th>Pos</th>
+        <th>Team</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+
+<script src="js/team.js"></script>
+</body>
+</html>

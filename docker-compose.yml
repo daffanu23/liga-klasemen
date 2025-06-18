@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./liga-klasemen-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./liga-klasemen-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PGUSER=daffa
+      - PGPASSWORD=admin123
+      - PGHOST=postgres
+      - PGDATABASE=liga_klasemen
+      - PGPORT=5432
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: daffa
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: liga_klasemen
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

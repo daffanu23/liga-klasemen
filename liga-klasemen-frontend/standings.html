@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FRLWRX Standings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .standings-wrapper {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .standings-wrapper h1 {
+      font-size: 32px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .selector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .selector select {
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: 'Saira', sans-serif;
+    }
+
+    .standings-table {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+      border-collapse: collapse;
+      font-size: 18px;
+    }
+
+    .standings-table th, .standings-table td {
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .standings-table th {
+      background-color: #f0f0f0;
+      text-transform: uppercase;
+    }
+
+    .standings-table td:last-child {
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .standings-table tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    @media (max-width: 600px) {
+      .standings-table {
+        font-size: 14px;
+      }
+
+      .selector {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="top-bar">RX2 RX3</div>
+    <div class="nav-container">
+      <a href="index.html"><img src="project/gambar/ferrari50.png" alt="WEC Logo" class="logo" /></a>
+      <nav class="navbar">
+        <a href="news-statik.html">News</a>
+        <a href="calender-final.html">Calender</a>
+        <a href="entrylist.html">Entry List</a>
+        <a href="standings.html">Standings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="standings-wrapper">
+    <h1>Klasemen Musim</h1>
+
+    <div class="selector">
+      <label>
+        Season:
+        <select id="season-select"></select>
+      </label>
+      <label>
+        Tipe:
+        <select id="type-select">
+          <option value="drivers">Driver</option>
+          <option value="teams">Team</option>
+        </select>
+      </label>
+    </div>
+
+    <table class="standings-table">
+      <thead>
+        <tr id="table-head"></tr>
+      </thead>
+      <tbody id="standings-body"></tbody>
+    </table>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <h3>Our Partners</h3>
+    <div class="partners">
+      <!-- Logo partner di sini -->
+    </div>
+    <div class="footer-logo">
+      <img src="gambar/logo-footer.png" alt="WEC Footer Logo" />
+    </div>
+  </footer>
+
+  <script src="project/js/standings.js"></script>
+</body>
+</html>
