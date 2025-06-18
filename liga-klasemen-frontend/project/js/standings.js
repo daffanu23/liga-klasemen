@@ -1,77 +1,88 @@
-const seasons = [1, 2, 3, 4, 5, 7, 8];
-const seasonSelect = document.getElementById("season-select");
-const typeSelect = document.getElementById("type-select");
-const tbody = document.getElementById("standings-body");
-const thead = document.getElementById("table-head");
+document.addEventListener("DOMContentLoaded", () => {
+    const seasonSelect = document.getElementById('season-select');
+    const typeSelect = document.getElementById('type-select');
+    const tableHead = document.getElementById('table-head');
+    const tableBody = document.getElementById('standings-body');
+    const API_BASE_URL = 'http://localhost:3000/api';
 
-// Isi dropdown musim
-seasons.forEach(season => {
-  const option = document.createElement("option");
-  option.value = season;
-  option.textContent = `Season ${season}`;
-  seasonSelect.appendChild(option);
+    // FUNGSI 1: Mengambil data klasemen dari API
+    async function fetchAndDisplayStandings() {
+        const season = seasonSelect.value;
+        const type = typeSelect.value; // 'team' atau 'driver'
+
+        if (!season || season === 'loading') {
+            tableBody.innerHTML = '<tr><td colspan="4">Pilih musim yang valid.</td></tr>';
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/standings/${type}/${season}`);
+            if (!response.ok) throw new Error('Gagal mengambil data dari server');
+            
+            const data = await response.json();
+            updateTable(type, data);
+        } catch (error) {
+            console.error('Error fetching standings:', error);
+            tableHead.innerHTML = '';
+            tableBody.innerHTML = `<tr><td colspan="4" style="color: red;">Gagal memuat data. Periksa koneksi ke backend.</td></tr>`;
+        }
+    }
+
+    // FUNGSI 2: Memperbarui tampilan tabel (header dan isi)
+    function updateTable(type, data) {
+        tableHead.innerHTML = '';
+        tableBody.innerHTML = '';
+
+        if (type === 'team') {
+            tableHead.innerHTML = `<th>Posisi</th><th>Tim</th><th>Poin</th>`;
+            if (data.length > 0) {
+                data.forEach(item => {
+                    tableBody.innerHTML += `<tr><td>${item.position}</td><td>${item.team_name}</td><td>${item.points}</td></tr>`;
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="3">Data klasemen tim tidak ditemukan.</td></tr>`;
+            }
+        } else { // type === 'driver'
+            tableHead.innerHTML = `<th>Posisi</th><th>Pembalap</th><th>Tim</th><th>Poin</th>`;
+             if (data.length > 0) {
+                // Kode untuk menampilkan data pembalap (jika sudah ada)
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="4">Data klasemen pembalap belum tersedia.</td></tr>`;
+            }
+        }
+    }
+
+    // FUNGSI 3: Mengisi dropdown pilihan musim
+    async function populateSeasonSelector() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/seasons`);
+            if (!response.ok) throw new Error('Gagal mengambil daftar musim');
+
+            const seasons = await response.json();
+            seasonSelect.innerHTML = ''; // Hapus pesan "Memuat musim..."
+
+            if (seasons.length > 0) {
+                seasons.forEach(season => {
+                    const option = new Option(season.name, season.year); // Teks, nilai
+                    seasonSelect.add(option);
+                });
+                // Setelah musim terisi, langsung panggil fungsi untuk memuat data pertama kali
+                fetchAndDisplayStandings();
+            } else {
+                seasonSelect.innerHTML = '<option>Tidak ada musim</option>';
+            }
+        } catch (error) {
+            console.error('Error populating seasons:', error);
+            seasonSelect.innerHTML = '<option>Gagal memuat</option>';
+        }
+    }
+
+    // --- PENYAMBUNG ACARA ---
+    // Tambahkan event listener agar setiap kali pilihan diubah, data dimuat ulang
+    seasonSelect.addEventListener('change', fetchAndDisplayStandings);
+    typeSelect.addEventListener('change', fetchAndDisplayStandings);
+
+    // --- TITIK AWAL ---
+    // Saat halaman pertama kali dimuat, panggil fungsi untuk mengisi pilihan musim
+    populateSeasonSelector();
 });
-
-// Fungsi untuk ambil dan tampilkan data
-function fetchStandings() {
-  const season = seasonSelect.value;
-  const type = typeSelect.value;
-
-  let url = `http://localhost:3000/seasons/${season}/${type}`;
-
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      tbody.innerHTML = "";
-      thead.innerHTML = "";
-
-      if (type === "drivers") {
-        thead.innerHTML = `
-          <th>Pos</th>
-          <th>Driver</th>
-          <th>Team</th>
-          <th>Points</th>
-        `;
-
-        data.sort((a, b) => b.points - a.points).forEach((entry, index) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${entry.driver}</td>
-            <td>${entry.team}</td>
-            <td>${entry.points}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-
-      } else if (type === "teams") {
-        thead.innerHTML = `
-          <th>Pos</th>
-          <th>Team</th>
-          <th>Points</th>
-        `;
-
-        data.sort((a, b) => b.points - a.points).forEach((entry, index) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${entry.team}</td>
-            <td>${entry.points}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
-    })
-    .catch(err => {
-      console.error("Gagal mengambil data:", err);
-    });
-}
-
-// Default load
-seasonSelect.addEventListener("change", fetchStandings);
-typeSelect.addEventListener("change", fetchStandings);
-
-// Load awal
-seasonSelect.value = seasons[0];
-typeSelect.value = "drivers";
-fetchStandings();

@@ -1,101 +1,52 @@
 const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
 const { Pool } = require('pg');
+const cors = require('cors');
 
 const app = express();
+const port = 3000;
 
-app.use(cors({
-  origin: 'http://localhost:8080', // ganti sesuai asal frontend
-  credentials: true
-}));
+app.use(cors());
 
-app.use(express.json());
+// PERBAIKAN: Konfigurasi koneksi akan diambil otomatis dari environment variables
+// (PGUSER, PGHOST, PGDATABASE, PGPASSWORD, PGPORT yang ada di docker-compose.yml)
+const pool = new Pool();
 
-app.use(session({
-  secret: 'rahasiaSuperAman',
-  resave: false,
-  saveUninitialized: false
-}));
-
-const pool = new Pool({
-  user: 'daffa',
-  host: 'localhost',
-  database: 'liga_klasemen',
-  password: 'admin123',
-  port: 5432,
+// API BARU: Untuk mengambil daftar semua musim
+app.get('/api/seasons', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT year, name FROM seasons ORDER BY year DESC');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error fetching seasons:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
-console.log("🔐 CONNECTED AS USER: daffa");
-
-app.get('/seasons/:id/drivers', async (req, res) => {
-  const { id } = req.params;
-  const result = await pool.query(`
-    SELECT drivers.name AS driver, teams.name AS team, drivers.points
-    FROM drivers
-    JOIN teams ON drivers.team_id = teams.id
-    WHERE drivers.season_id = $1
-    ORDER BY drivers.points DESC
-  `, [id]);
-  res.json(result.rows);
+// API untuk klasemen TIM
+app.get('/api/standings/team/:year', async (req, res) => {
+    const { year } = req.params;
+    try {
+        const query = `
+            SELECT st.position, t.name AS team_name, st.points
+            FROM standings_team st
+            JOIN teams t ON st.team_id = t.team_id
+            JOIN seasons s ON st.season_id = s.season_id
+            WHERE s.year = $1
+            ORDER BY st.position ASC;
+        `;
+        const result = await pool.query(query, [year]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error(`Error fetching team standings for year ${year}:`, error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
-app.get('/seasons/:id/teams', async (req, res) => {
-  const { id } = req.params;
-  const result = await pool.query(`
-    SELECT teams.name AS team, tsp.points
-    FROM team_season_points tsp
-    JOIN teams ON tsp.team_id = teams.id
-    WHERE tsp.season_id = $1
-    ORDER BY tsp.points DESC
-  `, [id]);
-  res.json(result.rows);
+// API untuk klasemen PEMBALAP (placeholder)
+app.get('/api/standings/driver/:year', async (req, res) => {
+    res.json([]); 
 });
 
-// ===========================
-// Auth: Login Admin
-// ===========================
-
-app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-
-  const result = await pool.query('SELECT * FROM admins WHERE username = $1', [username]);
-  const user = result.rows[0];
-  if (!user) return res.status(401).json({ message: 'User tidak ditemukan' });
-
-  const match = password === user.password; // bisa ganti bcrypt.compare di masa depan
-  if (!match) return res.status(401).json({ message: 'Password salah' });
-
-  req.session.user = { id: user.id, username: user.username };
-  res.json({ message: 'Login berhasil' });
-});
-
-app.post('/api/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.json({ message: 'Logout berhasil' });
-  });
-});
-
-function isAuthenticated(req, res, next) {
-  if (req.session.user) return next();
-  res.status(401).json({ message: 'Unauthorized' });
-}
-
-// ===========================
-// API Tambah Berita (Admin only)
-// ===========================
-
-app.post('/api/news', isAuthenticated, async (req, res) => {
-  const { title, summary, slug, image_url, content } = req.body;
-  await pool.query(
-    `INSERT INTO news (title, summary, slug, image_url, content)
-     VALUES ($1, $2, $3, $4, $5)`,
-    [title, summary, slug, image_url, content]
-  );
-  res.json({ message: 'Berita ditambahkan' });
-});
-
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 API jalan di http://localhost:${PORT}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Backend server siap di http://localhost:${port}`);
 });
