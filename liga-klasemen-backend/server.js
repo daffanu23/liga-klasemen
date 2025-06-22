@@ -6,18 +6,14 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
-
-// PERBAIKAN: Konfigurasi koneksi akan diambil otomatis dari environment variables
-// (PGUSER, PGHOST, PGDATABASE, PGPASSWORD, PGPORT yang ada di docker-compose.yml)
 const pool = new Pool();
 
-// API BARU: Untuk mengambil daftar semua musim
+// API untuk mengambil daftar musim
 app.get('/api/seasons', async (req, res) => {
     try {
-        const result = await pool.query('SELECT year, name FROM seasons ORDER BY year DESC');
+        const result = await pool.query('SELECT year, name FROM seasons ORDER BY year DESC, name ASC');
         res.json(result.rows);
     } catch (error) {
-        console.error('Error fetching seasons:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
@@ -37,14 +33,32 @@ app.get('/api/standings/team/:year', async (req, res) => {
         const result = await pool.query(query, [year]);
         res.json(result.rows);
     } catch (error) {
-        console.error(`Error fetching team standings for year ${year}:`, error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-// API untuk klasemen PEMBALAP (placeholder)
+// API untuk klasemen PEMBALAP
 app.get('/api/standings/driver/:year', async (req, res) => {
-    res.json([]); 
+    const { year } = req.params;
+    try {
+        const query = `
+            SELECT 
+                sd.position,
+                d.name AS driver_name,
+                t.name AS team_name,
+                sd.points
+            FROM standings_driver sd
+            JOIN drivers d ON sd.driver_id = d.driver_id
+            JOIN teams t ON sd.team_id = t.team_id
+            JOIN seasons s ON sd.season_id = s.season_id
+            WHERE s.year = $1
+            ORDER BY sd.position ASC;
+        `;
+        const result = await pool.query(query, [year]);
+        res.json(result.rows);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 app.listen(port, '0.0.0.0', () => {
