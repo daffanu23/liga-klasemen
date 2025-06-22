@@ -6,7 +6,19 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
-const pool = new Pool();
+
+// =========================================================================
+// === PERUBAHAN UNTUK HOSTING: Menggunakan Connection String            ===
+// =========================================================================
+const pool = new Pool({
+  // Kode ini akan menggunakan DATABASE_URL dari Render saat di hosting,
+  // atau variabel PG* lokal Anda saat dijalankan dengan docker-compose biasa.
+  connectionString: process.env.DATABASE_URL, 
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
+
+
+// ... Sisa kode API Anda tetap sama persis ...
 
 // API untuk mengambil daftar musim
 app.get('/api/seasons', async (req, res) => {

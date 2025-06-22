@@ -1,8 +1,18 @@
 const { Pool } = require('pg');
 
-const pool = new Pool();
+// =========================================================================
+// === PERUBAHAN UNTUK HOSTING: Menggunakan Connection String            ===
+// =========================================================================
+const pool = new Pool({
+  // Kode ini akan menggunakan DATABASE_URL dari Render saat di hosting,
+  // atau variabel PG* lokal Anda saat dijalankan dengan docker-compose biasa.
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
+
 
 async function seedDatabase() {
+    // ... Sisa seluruh kode seed.js Anda tetap sama persis seperti yang Anda kirimkan ...
     console.log('Memulai proses seeding data...');
     const client = await pool.connect();
 
@@ -13,7 +23,6 @@ async function seedDatabase() {
 
         // --- Data Seasons ---
         console.log('Memasukkan data seasons...');
-        // KOREKSI: Memberi nama unik untuk setiap musim
         const seasonsData = [
             { year: 2024, name: 'FRLWRX Season 7 (Soon)' },
             { year: 2024, name: 'FRLWRX Season 8 (Soon)' },
@@ -27,13 +36,13 @@ async function seedDatabase() {
         console.log('Memasukkan data teams...');
         const teamsData = [
             { name: 'Daffa Racing Rally TTA', principal: 'Dappa' },
-            { name: 'Nekoyo Performance Team', principal: '??' },
-            { name: 'IDGP Team Staynight With NDC', principal: '??' },
-            { name: 'ZNP Trabas Team', principal: '??' },
             { name: 'Jagonya Entok Vazter', principal: 'Elfin' },
-            { name: 'Team Quadrant X JER', principal: 'Rifqy' },
-            { name: 'LS Motorsport', principal: '??' },
             { name: 'Veloce Racing Team', principal: 'Rifqy' },
+            { name: 'IDGP Team Staynight With NDC', principal: '??' },
+            { name: 'LS Motorsport', principal: '??' },
+            { name: 'Nekoyo Performance Team', principal: '??' },
+            { name: 'ZNP Trabas Team', principal: '??' },
+            { name: 'Team Quadrant X JER', principal: 'Rifqy' },
         ];
         const insertedTeams = await Promise.all(teamsData.map(t => client.query('INSERT INTO teams(name, principal) VALUES($1, $2) RETURNING team_id, name', [t.name, t.principal])));
         const teamIdMap = insertedTeams.reduce((map, result) => { map[result.rows[0].name] = result.rows[0].team_id; return map; }, {});
@@ -57,7 +66,6 @@ async function seedDatabase() {
 
         // --- Data Klasemen Tim Season 9 ---
         console.log('Memasukkan data klasemen Tim Season 9...');
-        // KOREKSI: Memperbaiki posisi yang ganda
         const standingsS9_Teams = [
             { position: 1, team_name: 'Daffa Racing Rally TTA', points: 34 },
             { position: 2, team_name: 'Jagonya Entok Vazter', points: 25 },
@@ -98,7 +106,6 @@ async function seedDatabase() {
                 const seasonID = seasonIdMap['FRLWRX Season 9'];
                 const driverID = driverIdMap[st.driver_name];
                 const teamID = teamIdMap[st.team_name];
-                // KOREKSI: Perintah SQL menggunakan parameter $1, $2, dst. untuk keamanan
                 return client.query('INSERT INTO standings_driver(season_id, driver_id, team_id, position, points) VALUES($1, $2, $3, $4, $5)', [seasonID, driverID, teamID, st.position, st.points]);
             })
         );
