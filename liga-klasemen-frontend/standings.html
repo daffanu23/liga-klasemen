@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <style>
+        /* CSS LAMA ANDA (TETAP SAMA) */
         .standings-wrapper {
             padding: 40px 20px;
             text-align: center;
@@ -15,21 +16,6 @@
             font-size: 32px;
             text-transform: uppercase;
             margin-bottom: 30px;
-        }
-        .selector {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .selector select {
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-family: 'Saira', sans-serif;
         }
         .standings-table {
             width: 100%;
@@ -57,9 +43,51 @@
             .standings-table {
                 font-size: 14px;
             }
-            .selector {
+            .filter-controls { /* Disesuaikan untuk mobile */
                 flex-direction: column;
             }
+        }
+
+        /* --- CSS BARU UNTUK TOMBOL-TOMBOL --- */
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Mengelompokkan tipe dan musim secara vertikal */
+            gap: 15px; /* Jarak antar grup */
+            margin-bottom: 30px;
+        }
+
+        .selector-group {
+            display: flex;
+            flex-wrap: wrap; /* Tombol bisa turun ke baris baru jika tidak muat */
+            justify-content: center;
+            gap: 10px; /* Jarak antar tombol */
+        }
+
+        .filter-button {
+            padding: 8px 18px;
+            font-family: 'Saira', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #ddd;
+            background-color: transparent;
+            color: #333;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .filter-button:hover {
+            background-color: #f0f0f0;
+            border-color: #ccc;
+        }
+
+        /* Style untuk tombol yang sedang aktif */
+        .filter-button.active {
+            background-color: #00bfff; /* Merah khas balap */
+            color: white;
+            border-color: #00bfff;
         }
     </style>
 </head>
@@ -81,20 +109,15 @@
     <main class="standings-wrapper">
         <h1>Klasemen Musim</h1>
 
-        <div class="selector">
-            <label>
-                Musim:
-                <select id="season-select">
-                    <option>Memuat musim...</option>
-                </select>
-            </label>
-            <label>
-                Klasemen:
-                <select id="type-select">
-                    <option value="team">Tim</option>
-                    <option value="driver">Pembalap</option>
-                </select>
-            </label>
+        <!-- BAGIAN INI TELAH DIUBAH DARI DROPDOWN MENJADI TOMBOL -->
+        <div class="filter-controls">
+            <div class="selector-group" id="type-selector">
+                <button class="filter-button" data-type="driver">Pembalap</button>
+                <button class="filter-button" data-type="team">Tim</button>
+            </div>
+            <div class="selector-group" id="season-selector">
+                <!-- Tombol-tombol musim akan dibuat oleh JavaScript di sini -->
+            </div>
         </div>
 
         <table class="standings-table">
@@ -102,19 +125,20 @@
                 <tr id="table-head"></tr>
             </thead>
             <tbody id="standings-body">
-                </tbody>
+                <!-- Data akan diisi oleh JavaScript -->
+            </tbody>
         </table>
     </main>
 
     <footer class="footer">
         <h3>Our Partners</h3>
-        <div class="partners">
-            </div>
+        <div class="partners"></div>
         <div class="footer-logo">
             <img src="gambar/logo-footer.png" alt="WEC Footer Logo" />
         </div>
     </footer>
 
-    <script src="project/js/standings.js"></script>
+    <!-- PASTIKAN ADA type="module" DI SINI -->
+    <script type="module" src="project/js/standings.js"></script>
 </body>
 </html>

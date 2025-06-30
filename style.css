@@ -146,34 +146,62 @@ a {
   text-align: center;
 }
 
-.standings button {
+.tombol-standings {
+  /* Styling agar terlihat seperti tombol */
+  display: inline-block; /* Penting agar padding dan margin berfungsi benar */
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #00bfff;
-  border: none;
   color: white;
   font-weight: bold;
+  text-align: center;
+  text-decoration: none; /* Menghilangkan garis bawah dari tautan */
+  border: none;
   cursor: pointer;
+  border-radius: 5px; /* Opsional: membuat sudut lebih tumpul */
+}
+
+/* Opsional: Tambahkan efek hover agar lebih interaktif */
+.tombol-standings:hover {
+  background-color: #009acd;
 }
 
 /* Social Media Section */
 .socials {
   text-align: center;
-  padding: 40px;
+  padding: 50px 20px; /* Sedikit penyesuaian padding */
   background: linear-gradient(to right, #1e004e, #6f00b5);
   color: white;
   border-radius: 8px;
 }
 
+.socials h2 {
+    margin-bottom: 25px; /* Memberi jarak antara judul dan tombol */
+    font-size: 2em; /* Membuat judul sedikit lebih besar */
+}
+
 .social-links a {
-  margin: 0 20px;
-  display: inline-block;
-  margin-top: 20px;
+  margin: 10px 15px;
+  display: inline-flex;  /* Menggunakan flex untuk ikon dan teks */
+  align-items: center;    /* Menyejajarkan item */
+  gap: 10px;              /* Jarak antara ikon dan teks */
   background-color: white;
   color: #1e004e;
-  padding: 10px 20px;
+  padding: 12px 25px;
   border-radius: 5px;
   font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s; /* Transisi untuk hover */
+}
+
+.social-links a:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-3px); /* Efek terangkat saat hover */
+}
+
+/* Mengatur ukuran ikon jika perlu */
+.social-links a i {
+  font-size: 1.2em;
 }
 
 /* Footer */
