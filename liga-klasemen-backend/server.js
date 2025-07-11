@@ -80,3 +80,67 @@ app.get('/api/standings/driver/:year', async (req, res) => {
 app.listen(port, '0.0.0.0', () => {
     console.log(`Backend server siap di http://localhost:${port}`);
 });
+
+
+// Pastikan ini dipanggil setelah DOM siap (atau ketika kamu mau trigger sinkronisasi)
+async function syncToSQLiteAndDownload() {
+  // Load SQL.js
+  const SQL = await initSqlJs({
+    locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`
+  });
+
+  const db = new SQL.Database();
+
+  // 1. Buat struktur tabel
+  db.run(`
+    CREATE TABLE IF NOT EXISTS drivers (
+      position INTEGER,
+      driver_name TEXT,
+      team_name TEXT,
+      points INTEGER
+    );
+  `);
+
+  // 2. Ambil data dari Supabase
+  const { data, error } = await supabase
+    .from('standings_driver')
+    .select(`
+      position,
+      points,
+      drivers(name),
+      teams(name)
+    `);
+
+  if (error) {
+    console.error("Gagal ambil data:", error);
+    return;
+  }
+
+  // 3. Insert ke SQLite
+  const stmt = db.prepare(
+    "INSERT INTO drivers (position, driver_name, team_name, points) VALUES (?, ?, ?, ?)"
+  );
+
+  for (const row of data) {
+    stmt.run([
+      row.position,
+      row.drivers?.name || '',
+      row.teams?.name || '',
+      row.points
+    ]);
+  }
+
+  stmt.free();
+
+  // 4. Export SQLite file dan trigger download
+  const binaryArray = db.export();
+  const blob = new Blob([binaryArray], { type: 'application/octet-stream' });
+
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'driver_standings.sqlite';
+  a.click();
+}
+
+// Contoh pemakaian: panggil fungsi saat tombol diklik
+document.getElementById("sync-btn").addEventListener("click", syncToSQLiteAndDownload);

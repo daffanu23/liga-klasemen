@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FRLWRX Standings</title>
     <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
     <link rel="stylesheet" href="style.css" />
     <style>
         /* CSS LAMA ANDA (TETAP SAMA) */
@@ -12,11 +14,13 @@
             padding: 40px 20px;
             text-align: center;
         }
+
         .standings-wrapper h1 {
             font-size: 32px;
             text-transform: uppercase;
             margin-bottom: 30px;
         }
+
         .standings-table {
             width: 100%;
             max-width: 800px;
@@ -24,26 +28,34 @@
             border-collapse: collapse;
             font-size: 18px;
         }
-        .standings-table th, .standings-table td {
+
+        .standings-table th,
+        .standings-table td {
             padding: 12px;
             border-bottom: 1px solid #ccc;
         }
+
         .standings-table th {
             background-color: #f0f0f0;
             text-transform: uppercase;
         }
+
         .standings-table td:last-child {
             text-align: right;
             font-weight: bold;
         }
+
         .standings-table tr:nth-child(even) {
             background-color: #fafafa;
         }
+
         @media (max-width: 600px) {
             .standings-table {
                 font-size: 14px;
             }
-            .filter-controls { /* Disesuaikan untuk mobile */
+
+            .filter-controls {
+                /* Disesuaikan untuk mobile */
                 flex-direction: column;
             }
         }
@@ -53,16 +65,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; /* Mengelompokkan tipe dan musim secara vertikal */
-            gap: 15px; /* Jarak antar grup */
+            flex-direction: column;
+            /* Mengelompokkan tipe dan musim secara vertikal */
+            gap: 15px;
+            /* Jarak antar grup */
             margin-bottom: 30px;
         }
 
         .selector-group {
             display: flex;
-            flex-wrap: wrap; /* Tombol bisa turun ke baris baru jika tidak muat */
+            flex-wrap: wrap;
+            /* Tombol bisa turun ke baris baru jika tidak muat */
             justify-content: center;
-            gap: 10px; /* Jarak antar tombol */
+            gap: 10px;
+            /* Jarak antar tombol */
         }
 
         .filter-button {
@@ -85,12 +101,14 @@
 
         /* Style untuk tombol yang sedang aktif */
         .filter-button.active {
-            background-color: #00bfff; /* Merah khas balap */
+            background-color: #00bfff;
+            /* Merah khas balap */
             color: white;
             border-color: #00bfff;
         }
     </style>
 </head>
+
 <body>
 
     <header class="header">
@@ -108,7 +126,7 @@
 
     <main class="standings-wrapper">
         <h1>Klasemen Musim</h1>
-
+        <button id="sync-btn">Sinkronisasi & Unduh SQLite</button>
         <!-- BAGIAN INI TELAH DIUBAH DARI DROPDOWN MENJADI TOMBOL -->
         <div class="filter-controls">
             <div class="selector-group" id="type-selector">
@@ -141,4 +159,5 @@
     <!-- PASTIKAN ADA type="module" DI SINI -->
     <script type="module" src="project/js/standings.js"></script>
 </body>
+
 </html>
