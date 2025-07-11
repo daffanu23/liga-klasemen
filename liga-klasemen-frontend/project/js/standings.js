@@ -116,67 +116,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initializePage();
 });
-
-
-// Pastikan ini dipanggil setelah DOM siap (atau ketika kamu mau trigger sinkronisasi)
-async function syncToSQLiteAndDownload() {
-  // Load SQL.js
+async function syncDriverSeason1ToSQLite() {
   const SQL = await initSqlJs({
     locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`
   });
 
   const db = new SQL.Database();
 
-  // 1. Buat struktur tabel
+  // 1. Buat tabel sesuai kolom dari driver_season_1
   db.run(`
-    CREATE TABLE IF NOT EXISTS drivers (
-      position INTEGER,
-      driver_name TEXT,
-      team_name TEXT,
-      points INTEGER
+    CREATE TABLE IF NOT EXISTS driver_season_1 (
+      Peringkat INTEGER,
+      pembalap TEXT,
+      tim TEXT,
+      poin INTEGER
     );
   `);
 
-  // 2. Ambil data dari Supabase
+  // 2. Ambil data dari tabel Supabase
   const { data, error } = await supabase
-    .from('standings_driver')
-    .select(`
-      position,
-      points,
-      drivers(name),
-      teams(name)
-    `);
+    .from('driver_season_1')
+    .select('Peringkat, Pembalap, Tim, Poin');
 
   if (error) {
-    console.error("Gagal ambil data:", error);
+    console.error("Gagal mengambil data:", error);
+    alert("Gagal mengambil data dari Supabase");
     return;
   }
 
-  // 3. Insert ke SQLite
-  const stmt = db.prepare(
-    "INSERT INTO drivers (position, driver_name, team_name, points) VALUES (?, ?, ?, ?)"
-  );
+  // 3. Masukkan data ke SQLite
+  const stmt = db.prepare("INSERT INTO driver_season_1 (Peringkat, pembalap, tim, poin) VALUES (?, ?, ?, ?)");
 
   for (const row of data) {
     stmt.run([
-      row.position,
-      row.drivers?.name || '',
-      row.teams?.name || '',
-      row.points
+      row.Peringkat,
+      row.Pembalap,
+      row.Tim,
+      row.Poin
     ]);
   }
 
   stmt.free();
 
-  // 4. Export SQLite file dan trigger download
+  // 4. Ekspor dan unduh SQLite
   const binaryArray = db.export();
   const blob = new Blob([binaryArray], { type: 'application/octet-stream' });
 
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'driver_standings.sqlite';
+  a.download = 'driver_season_1.sqlite';
   a.click();
 }
 
-// Contoh pemakaian: panggil fungsi saat tombol diklik
-document.getElementById("sync-btn").addEventListener("click", syncToSQLiteAndDownload);
+// Trigger dengan tombol HTML
+document.getElementById('sync-btn').addEventListener('click', syncDriverSeason1ToSQLite);
